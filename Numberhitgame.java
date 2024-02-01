@@ -19,60 +19,94 @@ public class Numberhitgame implements IFGames{
 
         int cnt = 0; // ミスをした回数
         int winstreek = 0; // 連続正解した数
-        boolean roop = true;
+        boolean roop = true;    // roopをtrueに設定
+       // 無限ループ 
         while (true){
             int randomnum = rand.nextInt(0, 101); // 正解の数字
             System.out.println(randomnum);
-        if (roop == false){
-            System.out.println("まだ続けますか？ y / n ：");
-            String windecision = stdIn.next();
-            if (windecision.equals("y")){
-                roop = true;
-            }
-            else{
-                System.out.println("あなたは" + winstreek + "回連続で正解しました！");
-                break;
-            }
+            // roopがflaseなら
+            if (roop == false){
+                // まだゲームを続けるか提案する
+                System.out.println("まだ続けますか？ y / n ：");
+                // 文字を入力
+                String windecision = stdIn.next();
+                // ゲームを続ける場合
+                if (windecision.equals("y")){
+                    // roopをtrueに設定しなおす
+                    roop = true;
+                }
+                // 続けない場合
+                else{
+                    // もし2回以上連続正解していた場合何回連続正解したか表示
+                    if (winstreek > 1){
+                        System.out.println("あなたは" + winstreek + "回連続で正解しました！");
+                    }
+                    // ループを終了
+                    break;
+                }
 
-        }
-
-        System.out.println("0~100までの数字が格納されました");
-        System.out.println("4回ミスをする前に数字を当てましょう！");
-        while (cnt < 4){
-            System.out.print("0~100までの数字を入力してください：");
-            int num = stdIn.nextInt();
-            if (num == randomnum){
+            }
+            // メッセージを表示
+            System.out.println("0~100までの数字が格納されました");
+            System.out.println("許されるミスは4回までです");
+            // 4回ミスをするまでループ
+            while (cnt < 5){
+                // 数値の入力を促す
+                System.out.print("0~100までの数字を入力してください：");
+                // 数値を入力
+                int num = stdIn.nextInt();
+                // もし正解していた場合
+                if (num == randomnum){
+                    cnt += 1;
+                    System.out.println("正解です！");
+                    //　何回目で正解したか表示
+                    System.out.println("あなたは" + cnt + "回目で正解しました！");
+                    // ループしないようにfalseに設定
+                    roop = false;
+                    // 連続正解数を1増やす
+                    winstreek += 1;
+                    // カウントを0に戻す
+                    cnt = 0;
+                    // ループ終了
+                    break;
+                }
+                // 入力された数値が正解の数字が小さくて4回ミスをしていない場合(4回ミスしていた場合もう入力を受け付けないため)
+                else if( num > randomnum &&cnt != 4){
+                    // 小さいと表示
+                    System.out.println("正解の数字は" + num + "よりも小さいです！");
+                }
+                // 入力された数値が正解の数字が大きくて4回ミスをしていない場合(4回ミスしていた場合もう入力を受け付けないため)
+                else if( num < randomnum && cnt != 4){
+                    // 大きいと表示
+                    System.out.println("正解の数字は" + num + "よりも大きいです！");
+                }
+                // ミスカウントを増やす
                 cnt += 1;
-                System.out.println("正解です！");
-                System.out.println("あなたは" + cnt + "回目で正解しました！");
-                roop = false;
-                winstreek += 1;
-                cnt = 0;
-                break;
             }
-            else if( num > randomnum &&cnt != 3){
-                System.out.println("正解の数字は" + num + "よりも小さいです！");
-            }
-            else if( num < randomnum && cnt != 3){
-                System.out.println("正解の数字は" + num + "よりも大きいです！");
-            }
-            cnt += 1;
-        }
-        if (cnt == 4){
-            if(winstreek != 0 && winstreek != 1){
-                System.out.println("あなたは" + winstreek + "回連続で正解していました");
-            }
-            winstreek = 0;
-
-            System.out.println("あなたは数あてゲームに失敗しました。");
-            System.out.print("もう一度挑戦しますか？ y/n");     //yかn以外の入力を受け付けない例外作りたい
-            String defeatdecision = stdIn.next();
-            if (defeatdecision.equals("n")){
-                break;
-            }
-            else if(defeatdecision.equals("y")){
-                cnt = 0;
-            }
+            // もし5回ミスした場合
+            if (cnt == 5){
+                // 2問連続正解以上していた場合
+                if(winstreek > 1){
+                    // 連続正解数を表示
+                    System.out.println("あなたは" + winstreek + "回連続で正解していました");
+                }
+                // 連続正解数を0に戻す
+                winstreek = 0;
+                System.out.println("あなたは数あてゲームに失敗しました。");
+                // もう一度挑戦するか促す
+                System.out.print("もう一度挑戦しますか？ y / n");     //yかn以外の入力を受け付けない例外作りたい
+                // 入力してもらう
+                String defeatdecision = stdIn.next();
+                // もし続けない場合
+                if (defeatdecision.equals("n")){
+                    // ループ終了
+                    break;
+                }
+                // 続ける場合
+                else if(defeatdecision.equals("y")){
+                    // カウントを0に戻しループを続ける
+                    cnt = 0;
+                }
 
         }
 
