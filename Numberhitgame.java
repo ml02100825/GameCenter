@@ -23,7 +23,6 @@ public class Numberhitgame implements IFGames{
        // 無限ループ 
         while (true){
             int randomnum = rand.nextInt(0, 101); // 正解の数字
-            System.out.println(randomnum);
             // roopがflaseなら
             if (roop == false){
                 // まだゲームを続けるか提案する
@@ -85,6 +84,7 @@ public class Numberhitgame implements IFGames{
             }
             // もし5回ミスした場合
             if (cnt == 5){
+                System.out.println("正解の数字は" + randomnum + "でした");
                 // 2問連続正解以上していた場合
                 if(winstreek > 1){
                     // 連続正解数を表示
