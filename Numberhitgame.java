@@ -36,7 +36,7 @@ public class Numberhitgame implements IFGames{
             // roopがfalseなら
             if (this.roop == false){
                 // まだゲームを続けるか提案する
-                System.out.println("まだ続けますか？ y / n ：");
+                System.out.print("まだ続けますか？ y / n ：");
                 // 文字を入力
                 this.windecision = stdIn.next();
                 // 入力された値が y か n 以外だった場合例外を送出する
@@ -133,10 +133,10 @@ public class Numberhitgame implements IFGames{
                 }
         }}catch(NumberFormatException e){   // 入力されたものがintに変換できなかった場合
             System.out.println("数字以外の値が入力されました");
-            System.out.println("※ランダムな数字は初期化されているので今までのヒントはなしで考えてください");
+            System.out.println("ゲームの開始時に戻ります");
         }catch(NumericLimit e){             // 入力されたものが指定された範囲ではなかった場合
             System.out.println("0~100以外の値が入力されました");
-            System.out.println("※ランダムな数字は初期化されているので今までのヒントはなしで考えてください");
+            System.out.println("ゲームの開始時に戻ります");
         }catch(YorN e){                     // 入力されたものが y か n ではなかった場合
             System.out.println("y か n で入力してください");
             System.out.println("ゲームの開始時に戻ります");

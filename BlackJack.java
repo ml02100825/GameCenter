@@ -6,8 +6,8 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
     private Map<Integer, Integer> hands;        // プレイヤーの手札
     private List<Integer> winner;               // 勝ったプレイヤー
     private List<Integer> drawer;               // 引き分けたプレイヤー
-    List<Integer> tranp;  // トランプの山札
-    List<Integer> deletecard;
+    private List<Integer> tranp;                        // トランプの山札
+    private List<Integer> deletecard;                   // トランプの山札から削除したカード
     private int drawcnt;                        // 引き分けをカウントする変数
     private int cnt;                            // カウントする変数
     private String strplayers;                  // 一時的にString型としてプレイヤーの人数保持する変数
