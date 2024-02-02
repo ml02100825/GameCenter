@@ -15,6 +15,7 @@ public class GameCenter {
       System.out.println("99：終了");
       // ユーザーに起動するアプリを選択してもらう
       System.out.print("起動したいアプリを選択してください:");
+      // 文字列を入力
       switch(stdIn.nextLine()){
         case "1":
           //メモアプリのインスタンスを生成する
@@ -35,7 +36,7 @@ public class GameCenter {
         default:
           System.out.println("そんなアプリは存在しません。");
       }
-      // roopがflaseなら
+      // roopがfalseなら
       if (roop == false){
         System.out.println("ゲームを終了します");
         // ループを終了

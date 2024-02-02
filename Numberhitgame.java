@@ -33,7 +33,7 @@ public class Numberhitgame implements IFGames{
             try{
             this.cnt = 0; // ミスをした回数
             this.randomnum = rand.nextInt(0, 101); // 正解の数字
-            // roopがflaseなら
+            // roopがfalseなら
             if (this.roop == false){
                 // まだゲームを続けるか提案する
                 System.out.println("まだ続けますか？ y / n ：");
@@ -103,6 +103,7 @@ public class Numberhitgame implements IFGames{
             }
             // もし5回ミスした場合
             if (this.cnt == 5){
+                // 正解の数字を表示
                 System.out.println("正解の数字は" + this.randomnum + "でした");
                 // 2問連続正解以上していた場合
                 if(this.winstreek > 1){
@@ -130,13 +131,13 @@ public class Numberhitgame implements IFGames{
                     // カウントを0に戻しループを続ける
                     this.cnt = 0;
                 }
-        }}catch(NumberFormatException e){
+        }}catch(NumberFormatException e){   // 入力されたものがintに変換できなかった場合
             System.out.println("数字以外の値が入力されました");
             System.out.println("※ランダムな数字は初期化されているので今までのヒントはなしで考えてください");
-        }catch(NumericLimit e){
+        }catch(NumericLimit e){             // 入力されたものが指定された範囲ではなかった場合
             System.out.println("0~100以外の値が入力されました");
             System.out.println("※ランダムな数字は初期化されているので今までのヒントはなしで考えてください");
-        }catch(YorN e){
+        }catch(YorN e){                     // 入力されたものが y か n ではなかった場合
             System.out.println("y か n で入力してください");
             System.out.println("ゲームの開始時に戻ります");
         }

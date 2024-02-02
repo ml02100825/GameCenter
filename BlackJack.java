@@ -6,14 +6,18 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
     private Map<Integer, Integer> hands;        // プレイヤーの手札
     private List<Integer> winner;               // 勝ったプレイヤー
     private List<Integer> drawer;               // 引き分けたプレイヤー
-    List<Integer> tranp = super.tranp;  // トランプの山札
+    List<Integer> tranp;  // トランプの山札
+    List<Integer> deletecard;
     private int drawcnt;                        // 引き分けをカウントする変数
     private int cnt;                            // カウントする変数
+    private String strplayers;                  // 一時的にString型としてプレイヤーの人数保持する変数
     private int players;                        // プレイヤーの人数
     private String decision;                    // プレイヤーの選択を判定するための変数
     private int hand;                           // プレイヤーの手札を一時的に保持する変数
     private int dealer;                         // ディーラーの手札
     private int size;                           // winner, drawerどちらかのサイズを保持する変数
+    private int playerscore;                    // プレイヤーのスコア
+    private int dealerscore;                    // ディーラーのスコア
     
     
 
@@ -30,15 +34,26 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
         System.out.println("ブラックジャックを終了します。");
     }
     // カードをドローするdrawメソッド(戻り値はint型)
-    public int draw(List<Integer> tranp){
+    @Override public int draw(List<Integer> tranp, List<Integer> deletecard){
             // 山札からランダムにカードを取り出す
             int drownumber = new Random().nextInt(tranp.size());
             // その数値をdrawに代入
             int draw = tranp.get(drownumber);
+            deletecard.add(draw);
             // 山札から取り出したカードを削除する
             tranp.remove(drownumber);
             // 代入した数字を返す
             return draw;
+    }
+    // トランプの枚数を初期化するrecoverytrunpメソッド
+    @Override public void recoverytranp(List<Integer>tranp, List<Integer> deletecard){
+            // 削除したカードの枚数をsizeに代入
+            int size = deletecard.size();
+            // sizeの回数ループ
+            for (int i = 0; i < size; i ++){
+                // 削除したカードをtranpに追加
+                tranp.add(deletecard.get(i));
+            }
     }
     // ブラックジャックを実行するblackjackメソッド
     public void blackjack(){
@@ -46,30 +61,36 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
             this.hands = new HashMap<>();
             this.winner = new ArrayList<>();
             this.drawer = new ArrayList<>();
+            this.deletecard = new ArrayList<>();
             this.cnt = 0;    //カウントする変数cntを定義
             this.drawcnt = 0; // 引き分けをカウントする変数draw_cntを定義
             System.out.println("プレイヤーの人数を入力してください(推奨人数：1 ~ 5　最大10人)"); 
             System.out.println("99と入力するとループを終了します");
             System.out.print("プレイヤーの人数を入力：");      
             try{
-                // 数値の入力
+                this.tranp = super.tranp; 
+                // プレイヤーの人数を入力
                 // 最初はString型で入力を促す
-                String strplayers = stdIn.next();   
+                this.strplayers = stdIn.next();   
                 // int型に変換
-                this.players = Integer.valueOf(strplayers);
+                this.players = Integer.valueOf(this.strplayers);
+                // 入力された値が99なら
                 if ( this.players == 99){
+                    // ループを終了
                     break;
                 }
+                //  入力された値が1未満か10より大きかった場合
                 if (this.players < 1 || this.players > 10){
+                    // 例外を送出する
                     throw new NumericLimit(this.players);
                 }
                 System.out.println("手札が配られます");
                 // 入力されたプレイヤー数分ループ
                 for (int i = 0; i < this.players; i++){
                     // 手札をドローしhandに代入
-                    int hand = draw(tranp) + draw(tranp);
+                    this.hand = draw(this.tranp, this.deletecard) + draw(this.tranp, this.deletecard);
                     // mapリストhandsにプレイヤー(i + 1)として手札を追加
-                    hands.put(i + 1, hand);
+                    this.hands.put(i + 1, this.hand);
                 }
                 // 全プレイヤーの手札を表示
                 for (Integer key : this.hands.keySet()) {
@@ -83,7 +104,9 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                     System.out.print("Player" + (i) + "さん、ドローしますか？ y / n");
                     // y か n を入力
                     this.decision = stdIn.next();
+                    // 入力された文字がnでもyでもなかった場合
                     if (this.decision.equals("n") == false && this.decision.equals("y") == false){
+                        // 例外を送出
                         throw new YorN(this.decision);
                     }
                     // nが入力された場合
@@ -93,7 +116,7 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
 
                     }
                     // yと入力された場合
-                    else if(decision.equals("y") == true){
+                    else if(this.decision.equals("y") == true){
                         // 変数handを作成
                         this.hand = 0;
                         // handにドロー前の手札を代入
@@ -103,7 +126,7 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                             //  mapリストhandsからプレイヤーのデータを削除
                             this.hands.remove(i);
                             // handにドローした数字を足す
-                            this.hand += draw(this.tranp);
+                            this.hand += draw(this.tranp, this.deletecard);
                             // handsにデータを追加しなおす
                             this.hands.put(i, this.hand);
                         }
@@ -113,7 +136,7 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                         }
                     }                
                         // ドロー後の手札を表示
-                        System.out.println((i) + ":" + hands.get(i));
+                        System.out.println((i) + ":" + this.hands.get(i));
                 }
                 // もし全員がnを選択していた場合
                 if ( this.cnt == this.players){
@@ -137,10 +160,11 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
             // ルールに従いディーラーの手札の合計が17以上になるまでループ
             while (this.dealer < 17){
                 // ドローしたものを加算
-                this.dealer += draw(this.tranp);
+                this.dealer += draw(this.tranp, this.deletecard);
             }
             // もしディーラーの手札の合計が21を超えた場合
             if (this.dealer > 21){
+                // ディーラーの手札を表示
                 System.out.println("ディーラーの点数は"  + this.dealer + "です");
                 System.out.println("ディーラーがバーストしました。バーストしていない全てのプレイヤーの勝ちとなります");
                 // プレイヤー数分ループ
@@ -161,14 +185,14 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                     // 勝者の人数分ループ
                     for (int i = 0; i < this.size; i++){
                     // リストの末尾である場合
-                        if (i == size -1){
+                        if (i == this.size -1){
                             // 空白を入れずに出力
                             System.out.print("プレイヤー" + this.winner.get(i));
                         }
                         // 末尾ではない場合
                         else{
                             // 空白を入れて出力
-                            System.out.print("プレイヤー" + winner.get(i) + " ");
+                            System.out.print("プレイヤー" + this.winner.get(i) + " ");
                         }
                     }
                     System.out.println("の勝ちです");
@@ -181,25 +205,26 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
             // ディーラーの点数が22未満の場合
             else{
                 // ディーラーの点数を表示
-                System.out.println("ディーラーの点数は"  + dealer + "です");
+                System.out.println("ディーラーの点数は"  + this.dealer + "です");
                 // プレイヤー数分ループ
-                for (Integer key : hands.keySet()) {
-                    // ディーラーが21にどれだけ近いか
-                    int dealerscore = 21 - dealer;
-                    int playerscore = 0;    // プレイヤーが21にどれだけ近いか
+                for (Integer key : this.hands.keySet()) {
+                    // ディーラーが21にどれだけ近いか代入
+                    this.dealerscore = 21 - this.dealer;
+                    // プレイヤーのスコアを初期化
+                    this.playerscore = 0; 
                     // プレイヤーの手札が22未満の場合
-                    if (hands.get(key) < 22){
+                    if (this.hands.get(key) < 22){
                         // プレイヤーは21にどれだけ近いかを代入
-                        playerscore += 21 -hands.get(key);
+                        this.playerscore += 21 - this.hands.get(key);
                         // もしプレイヤーがディーラーよりも21に近かった場合
-                        if(playerscore < dealerscore){
+                        if(this.playerscore < this.dealerscore){
                             // 勝者リストにプレイヤーを追加
-                            winner.add(key);
+                            this.winner.add(key);
                             // カウントを増やす
                             this.cnt += 1;         
                         }
                     // もしプレイヤーとディーラーのスコアが同じだtt場合
-                        else if(playerscore == dealerscore){
+                        else if(this.playerscore == this.dealerscore){
                             // 引き分けリストにプレイヤーを追加
                             this.drawer.add(key);
                             // カウントを減らす
@@ -208,11 +233,11 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                         }
                 }
                 // 勝者が一人でもいた場合
-                if (cnt > 0){
+                if (this.cnt > 0){
                     // 勝者の人数をsizeに代入
-                    this.size = winner.size();
+                    this.size = this.winner.size();
                     // 勝者の人数分ループ
-                    for (int i = 0; i < size; i++){
+                    for (int i = 0; i < this.size; i++){
                         // リストの末尾である場合
                         if (i == this.size -1){
                             System.out.print("プレイヤー" + this.winner.get(i));
@@ -230,16 +255,18 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                     this.size = this.drawer.size();
                     // 引き分けの人数分ループ
                     for (int i = 0; i < this.size; i++){
+                        if (size > 0){
                         // リストの末尾である場合
                         if (i == this.size -1){
                             // 空白を入れずに出力
-                            System.out.print("プレイヤー" + this.winner.get(i));
+                            System.out.print("プレイヤー" + this.drawer.get(i));
                         }
                         // リストの末尾以外の場合
                         else{
                             // 空白を入れて出力
-                            System.out.print("プレイヤー" + this.winner.get(i) + " ");
+                            System.out.print("プレイヤー" + this.drawer.get(i) + " ");
                         }
+                    }
                     }                
                     System.out.println("は引き分けです");
                 }
@@ -248,18 +275,23 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                     System.out.println("ディーラーの勝ちです。");
                 }
             }
-            }catch(NumberFormatException e){
+            }catch(NumberFormatException e){    // 入力されたものがintに変換できなかった場合
                 System.out.println("数字以外の値が入力されました");
                 System.out.println("1 ~ 10 の整数を入力してください");
+                System.out.println("ゲームの開始時に戻ります");
             }
-            catch (NumericLimit e){
+            catch (NumericLimit e){             // 入力されたものが指定された範囲ではなかった場合
                 System.out.println("1 ~ 10の値を入力してください");
+                System.out.println("ゲームの開始時に戻ります");
         }
-            catch(YorN e){
+            catch(YorN e){                      // 入力されたものが y か n ではなかった場合
                 System.out.println("y か n を入力してください");
                 System.out.println("ゲームの開始時に戻ります");
         }
-        }
+            // トランプの枚数を初期化
+            recoverytranp(this.tranp, this.deletecard);
+  }
 }
+
 }
 
