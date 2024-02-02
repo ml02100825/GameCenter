@@ -26,15 +26,12 @@ public class Numberhitgame implements IFGames{
       // メソッド定義
       // 数当て機能の実装
       public void numberhit(){
-
-
         this.winstreek = 0; // 連続正解した数
         this.roop = true;    // roopをtrueに設定
        // 無限ループ 
         while (true){
             try{
             this.cnt = 0; // ミスをした回数
-
             this.randomnum = rand.nextInt(0, 101); // 正解の数字
             // roopがflaseなら
             if (this.roop == false){
@@ -60,7 +57,6 @@ public class Numberhitgame implements IFGames{
                     // ループを終了
                     break;
                 }
-
             }
             // メッセージを表示
             System.out.println("0~100までの数字が格納されました");
@@ -134,7 +130,6 @@ public class Numberhitgame implements IFGames{
                     // カウントを0に戻しループを続ける
                     this.cnt = 0;
                 }
-
         }}catch(NumberFormatException e){
             System.out.println("数字以外の値が入力されました");
             System.out.println("※ランダムな数字は初期化されているので今までのヒントはなしで考えてください");
@@ -145,13 +140,6 @@ public class Numberhitgame implements IFGames{
             System.out.println("y か n で入力してください");
             System.out.println("ゲームの開始時に戻ります");
         }
-
-
         }
-
 }
-
-
-
-        
-      }
+}

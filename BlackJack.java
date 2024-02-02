@@ -50,10 +50,7 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
             this.drawcnt = 0; // 引き分けをカウントする変数draw_cntを定義
             System.out.println("プレイヤーの人数を入力してください(推奨人数：1 ~ 5　最大10人)"); 
             System.out.println("99と入力するとループを終了します");
-            System.out.print("プレイヤーの人数を入力：");
- 
-            
-        
+            System.out.print("プレイヤーの人数を入力：");      
             try{
                 // 数値の入力
                 // 最初はString型で入力を促す
@@ -66,8 +63,6 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                 if (this.players < 1 || this.players > 10){
                     throw new NumericLimit(this.players);
                 }
-            
-
                 System.out.println("手札が配られます");
                 // 入力されたプレイヤー数分ループ
                 for (int i = 0; i < this.players; i++){
@@ -81,8 +76,7 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                     System.out.println(key + ":" + hands.get(key));
                 }
                 // 無限ループ
-                while (true) {
-                    
+                while (true) {                    
                 // プレイヤー数分ループ
                 for (int i = 1; i <= this.players; i++){
                     // ドローするか提案
@@ -117,11 +111,7 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                         else{
                             System.out.println("あなたは21を超えているのでドローできません");
                         }
-
-
-
-                    }
-                    
+                    }                
                         // ドロー後の手札を表示
                         System.out.println((i) + ":" + hands.get(i));
                 }
@@ -140,10 +130,7 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                     }
                     System.out.println(key + ":" + this.hands.get(key));
                 }
-
-
             }
-        
             this.cnt = 0;           // カウントを初期化
             this.dealer= 0;     // ディーラーの手札を初期化
             System.out.println("ディーラーがドローします");
@@ -166,7 +153,6 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                         this.cnt += 1;
 
                     }
-
                 }
                 // もしカウントが0以上(勝者が1人以上いた場合)
                 if (this.cnt >= 1){
@@ -191,7 +177,6 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                 else{
                     System.out.println("バーストしていないプレイヤーはいませんでした。");
                 }
-
             }
             // ディーラーの点数が22未満の場合
             else{
@@ -211,20 +196,16 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                             // 勝者リストにプレイヤーを追加
                             winner.add(key);
                             // カウントを増やす
-                            this.cnt += 1;
-            
+                            this.cnt += 1;         
                         }
                     // もしプレイヤーとディーラーのスコアが同じだtt場合
                         else if(playerscore == dealerscore){
                             // 引き分けリストにプレイヤーを追加
                             this.drawer.add(key);
                             // カウントを減らす
-                            this.drawcnt = -1;
-                
+                            this.drawcnt = -1;           
                         }
                         }
-            
-
                 }
                 // 勝者が一人でもいた場合
                 if (cnt > 0){
@@ -259,8 +240,7 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                             // 空白を入れて出力
                             System.out.print("プレイヤー" + this.winner.get(i) + " ");
                         }
-                    }
-                
+                    }                
                     System.out.println("は引き分けです");
                 }
                 // 引き分け以上のプレイヤーがいなかった場合
@@ -281,8 +261,5 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
         }
         }
 }
-    
-
-
-    }
+}
 

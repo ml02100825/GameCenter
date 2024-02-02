@@ -33,7 +33,7 @@ public class GameCenter {
           roop = false;
           break;
         default:
-        System.out.println("そんなアプリは存在しません。");
+          System.out.println("そんなアプリは存在しません。");
       }
       // roopがflaseなら
       if (roop == false){
