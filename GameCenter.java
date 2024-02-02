@@ -5,7 +5,7 @@ public class GameCenter {
     Scanner stdIn = new Scanner(System.in);
     // アプリのインスタンスを管理する変数appを宣言する
     IFGames games;
-    // ループの継続緒判断する変数roopを宣言する
+    // ループの継続を判断する変数roopを宣言する
     boolean roop = true;  
     // 無限ループ
     while (true){

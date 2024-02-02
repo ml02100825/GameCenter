@@ -1,18 +1,25 @@
 import java.util.*;
 public class Numberhitgame implements IFGames{
+    // スキャナークラスをインスタンス化
     Scanner stdIn = new Scanner(System.in);
+    // ランダムクラスをインスタンス化
     Random rand = new Random();
-    int cnt;
-    boolean roop;
-    int winstreek;
+    private int cnt;                // カウントする変数
+    private String strnum;          // 一時的にString型としてユーザーが入力した数字を保持する変数
+    private int num;                // ユーザーが入力した数字
+    private int randomnum;          // 数あての答え
+    private boolean roop;           // ループを継続するかどうか判定する変数
+    private int winstreek;          // 連続正解数
+    private String windecision;     // 正解したときにループを継続するかどうか判定する変数
+    private String defeatdecision;  // 不正解だった時にループを継続するかどうか判定する変数
     // メソッド定義 抽象メソッドのオーバーライド
     // アプリの起動 startUpメソッド
     public void startUp(){
         System.out.println("数当てゲームを開始します！");
-        //アプリの本機能である、calcメソッドを呼び出す
+        //アプリの本機能である、numberhitメソッドを呼び出す
         numberhit();
     }
-    // アプリの起動 endメソッド
+    // アプリの終了 endメソッド
     public void end(){
         System.out.println("数当てゲームを終了します。");
     }
@@ -20,30 +27,32 @@ public class Numberhitgame implements IFGames{
       // 数当て機能の実装
       public void numberhit(){
 
-        this.cnt = 0; // ミスをした回数
+
         this.winstreek = 0; // 連続正解した数
         this.roop = true;    // roopをtrueに設定
-        try{
        // 無限ループ 
         while (true){
-            int randomnum = rand.nextInt(0, 101); // 正解の数字
+            try{
+            this.cnt = 0; // ミスをした回数
+
+            this.randomnum = rand.nextInt(0, 101); // 正解の数字
             // roopがflaseなら
             if (this.roop == false){
                 // まだゲームを続けるか提案する
                 System.out.println("まだ続けますか？ y / n ：");
                 // 文字を入力
-                String windecision = stdIn.next();
+                this.windecision = stdIn.next();
                 // 入力された値が y か n 以外だった場合例外を送出する
-                if (windecision.equals("y") == false && windecision.equals("n") == false){
-                    throw new YorN(windecision);
+                if (this.windecision.equals("y") == false && this.windecision.equals("n") == false){
+                    throw new YorN(this.windecision);
                 }
                 // ゲームを続ける場合
-                if (windecision.equals("y") == true){
+                if (this.windecision.equals("y") == true){
                     // roopをtrueに設定しなおす
                     this.roop = true;
                 }
                 // 続けない場合
-                else if (windecision.equals("n") == true){
+                else if (this.windecision.equals("n") == true){
                     // もし2回以上連続正解していた場合何回連続正解したか表示
                     if (this.winstreek > 1){
                         System.out.println("あなたは" + this.winstreek + "回連続で正解しました！");
@@ -61,21 +70,21 @@ public class Numberhitgame implements IFGames{
                 // 数値の入力を促す
                 System.out.print("0~100までの数字を入力してください：");
                 // 最初はString型で入力を促す
-                String strnum = stdIn.next();
+                this.strnum = stdIn.next();
                 // int型に変換
-                int num = Integer.valueOf(strnum);
+                this.num = Integer.valueOf(strnum);
                 // 入力された数字が0以上100未満だった場合例外を送出する
-                if (num < 0 || num > 100){
-                    throw new NumericLimit(num);
+                if (this.num < 0 || this.num > 100){
+                    throw new NumericLimit(this.num);
                 }
                 // もし正解していた場合
-                if (num == randomnum){
+                if (this.num == this.randomnum){
                     this.cnt += 1;
                     System.out.println("正解です！");
                     //　何回目で正解したか表示
-                    System.out.println("あなたは" + cnt + "回目で正解しました！");
+                    System.out.println("あなたは" + this.cnt + "回目で正解しました！");
                     // ループしないようにfalseに設定
-                    roop = false;
+                    this.roop = false;
                     // 連続正解数を1増やす
                     this.winstreek += 1;
                     // カウントを0に戻す
@@ -84,62 +93,62 @@ public class Numberhitgame implements IFGames{
                     break;
                 }
                 // 入力された数値が正解の数字が小さくて4回ミスをしていない場合(4回ミスしていた場合もう入力を受け付けないため)
-                else if( num > randomnum &&cnt != 4){
+                else if( this.num > this.randomnum && this.cnt != 4){
                     // 小さいと表示
-                    System.out.println("正解の数字は" + num + "よりも小さいです！");
+                    System.out.println("正解の数字は" + this.num + "よりも小さいです！");
                 }
                 // 入力された数値が正解の数字が大きくて4回ミスをしていない場合(4回ミスしていた場合もう入力を受け付けないため)
-                else if( num < randomnum && cnt != 4){
+                else if( this.num < this.randomnum && this.cnt != 4){
                     // 大きいと表示
-                    System.out.println("正解の数字は" + num + "よりも大きいです！");
+                    System.out.println("正解の数字は" + this.num + "よりも大きいです！");
                 }
                 // ミスカウントを増やす
-                cnt += 1;
+                this.cnt += 1;
             }
             // もし5回ミスした場合
             if (this.cnt == 5){
-                System.out.println("正解の数字は" + randomnum + "でした");
+                System.out.println("正解の数字は" + this.randomnum + "でした");
                 // 2問連続正解以上していた場合
                 if(this.winstreek > 1){
                     // 連続正解数を表示
                     System.out.println("あなたは" + this.winstreek + "回連続で正解していました");
                 }
                 // 連続正解数を0に戻す
-                winstreek = 0;
+                this.winstreek = 0;
                 System.out.println("あなたは数あてゲームに失敗しました。");
                 // もう一度挑戦するか促す
                 System.out.print("もう一度挑戦しますか？ y / n");     //yかn以外の入力を受け付けない例外作りたい
                 // 入力してもらう
-                String defeatdecision = stdIn.next();
+                this.defeatdecision = stdIn.next();
                 // 入力された値が y か n 以外だった場合例外を送出する
-                if (defeatdecision.equals("y") == false && defeatdecision.equals("n") == false){
-                    throw new YorN(defeatdecision);
+                if (this.defeatdecision.equals("y") == false && this.defeatdecision.equals("n") == false){
+                    throw new YorN(this.defeatdecision);
                 }
                 // もし続けない場合
-                if (defeatdecision.equals("n") == true){
+                if (this.defeatdecision.equals("n") == true){
                     // ループ終了
                     break;
                 }
                 // 続ける場合
-                else if(defeatdecision.equals("y") == true){
+                else if(this.defeatdecision.equals("y") == true){
                     // カウントを0に戻しループを続ける
                     this.cnt = 0;
                 }
 
+        }}catch(NumberFormatException e){
+            System.out.println("数字以外の値が入力されました");
+            System.out.println("※ランダムな数字は初期化されているので今までのヒントはなしで考えてください");
+        }catch(NumericLimit e){
+            System.out.println("0~100以外の値が入力されました");
+            System.out.println("※ランダムな数字は初期化されているので今までのヒントはなしで考えてください");
+        }catch(YorN e){
+            System.out.println("y か n で入力してください");
+            System.out.println("ゲームの開始時に戻ります");
         }
 
 
         }
-    }catch(NumberFormatException e){
-        System.out.println("数字以外の値が入力されました");
-        System.out.println("ゲームの選択からやり直してください");
-    }catch(NumericLimit e){
-        System.out.println("0~100以外の値が入力されました");
-        System.out.println("ゲームの選択からやり直してください");
-    }catch(YorN e){
-        System.out.println("y か n で入力してください");
-        System.out.println("ゲームの選択からやり直してください");
-    }
+
 }
 
 
