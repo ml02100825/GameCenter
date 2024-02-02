@@ -35,17 +35,24 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
             // 代入した数字を返す
             return draw;
     }
-    // ブラックジャックを実行するメソッド
+    // ブラックジャックを実行するblackjackメソッド
     public void blackjack(){
         this.hands = new HashMap<>();
         this.winner = new ArrayList<>();
         this.drawer = new ArrayList<>();
         this.cnt = 0;    //カウントする変数cntを定義
         this.drawcnt = 0; // 引き分けをカウントする変数draw_cntを定義
-        System.out.println("プレイヤーの人数を入力してください(推奨人数：1 ~ 5)"); 
+        System.out.println("プレイヤーの人数を入力してください(推奨人数：1 ~ 5　最大10人)"); 
+    
+        try{
         // 数値の入力
-        int players = stdIn.nextInt();
-
+        // 最初はString型で入力を促す
+        String strplayers = stdIn.next();   
+        // int型に変換
+        int players = Integer.valueOf(strplayers);
+        if (players < 1 || players > 10){
+            throw new NumericLimit(players);
+        }
         System.out.println("手札が配られます");
         // 入力されたプレイヤー数分ループ
         for (int i = 0; i < players; i++){
@@ -67,14 +74,17 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
             System.out.println("Player" + (i) + "さん、ドローしますか？ y / n");
             // y か n を入力
             String decision = stdIn.next();
+            if (decision.equals("n") == false && decision.equals("y") == false){
+                throw new YorN(decision);
+            }
             // nが入力された場合
-            if (decision.equals("n")){
+            if (decision.equals("n") == true){
                 // カウントを増やす
                 this.cnt += 1;
 
             }
             // yと入力された場合
-            else if(decision.equals("y")){
+            else if(decision.equals("y") == true){
                 // 変数handを作成
                 int hand = 0;
                 // handにドロー前の手札を代入
@@ -107,6 +117,14 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
         }
         // 選択していなかった場合はカウントを初期化しループを続行
         this.cnt = 0;
+        // 全員が一回ドローするかしないかを選択した段階で全員の手札を表示
+        for (Integer key : hands.keySet()) {
+            // 見やすいように最初の行にのみ改行を入れる
+            if(key == 1){
+                System.out.println();
+            }
+            System.out.println(key + ":" + hands.get(key));
+        }
 
 
     }
@@ -234,9 +252,19 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
         else{
             System.out.println("ディーラーの勝ちです。");
         }
-    } 
+    }
+    }catch(NumberFormatException e){
+        System.out.println("数字以外の値が入力されました");
+    }
+    catch (NumericLimit e){
+        System.out.println("1 ~ 10の値を入力してください");
+}
+    catch(YorN e){
+        System.out.println("y か n を入力してください");
+}
 }
     
+
 
     }
 
