@@ -33,6 +33,7 @@ public class GameCenter {
           // roopをfalseに変更
           roop = false;
           break;
+        // case以外が入力された場合
         default:
           System.out.println("そんなアプリは存在しません。");
       }

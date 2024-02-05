@@ -1,6 +1,3 @@
-/**
- * InnerIFGames
- */
 public interface IFGames {
     // 抽象メソッドstartUpの定義
     // アプリの起動

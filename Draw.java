@@ -1,7 +1,4 @@
 import java.util.*;
-/**
- * Draw
- */
 public interface Draw {
     // 抽象メソッド drawの定義
     // ドロー
