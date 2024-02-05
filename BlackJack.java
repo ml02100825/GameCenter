@@ -57,6 +57,7 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
     }
     // ブラックジャックを実行するblackjackメソッド
     public void blackjack(){
+        // 無限ループ
         while (true) {
             this.hands = new HashMap<>();           // プレイヤーの手札を新しく作る
             this.winner = new ArrayList<>();        // 勝者リストを新しく作る
