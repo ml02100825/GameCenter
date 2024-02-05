@@ -1,3 +1,4 @@
+package GameCenter;
 import java.util.*;
 public class GameCenter {
     public static void main(String[] args) {

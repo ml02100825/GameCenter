@@ -1,3 +1,4 @@
+package GameCenter;
 import java.util.*;
 public class BlackJack extends Trunp implements IFGames ,Draw{
     // スキャナークラスをインスタンス化
@@ -6,8 +7,8 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
     private Map<Integer, Integer> hands;        // プレイヤーの手札
     private List<Integer> winner;               // 勝ったプレイヤー
     private List<Integer> drawer;               // 引き分けたプレイヤー
-    private List<Integer> tranp;                        // トランプの山札
-    private List<Integer> deletecard;                   // トランプの山札から削除したカード
+    private List<Integer> tranp;                // トランプの山札
+    private List<Integer> deletecard;           // トランプの山札から削除したカード
     private int drawcnt;                        // 引き分けをカウントする変数
     private int cnt;                            // カウントする変数
     private String strplayers;                  // 一時的にString型としてプレイヤーの人数保持する変数
@@ -58,16 +59,17 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
     // ブラックジャックを実行するblackjackメソッド
     public void blackjack(){
         while (true) {
-            this.hands = new HashMap<>();
-            this.winner = new ArrayList<>();
-            this.drawer = new ArrayList<>();
-            this.deletecard = new ArrayList<>();
-            this.cnt = 0;    //カウントする変数cntを定義
-            this.drawcnt = 0; // 引き分けをカウントする変数draw_cntを定義
+            this.hands = new HashMap<>();           // プレイヤーの手札を新しく作る
+            this.winner = new ArrayList<>();        // 勝者リストを新しく作る
+            this.drawer = new ArrayList<>();        // 引き分けリストを新しく作る
+            this.deletecard = new ArrayList<>();    // ドローによって消えたカードを保持するリストを作る    
+            this.cnt = 0;                           // カウントする変数cntを定義
+            this.drawcnt = 0;                       // 引き分けをカウントする変数draw_cntを定義
             System.out.println("プレイヤーの人数を入力してください(推奨人数：1 ~ 5　最大10人)"); 
             System.out.println("99と入力するとループを終了します");
             System.out.print("プレイヤーの人数を入力：");      
             try{
+                // トランプを継承
                 this.tranp = super.tranp; 
                 // プレイヤーの人数を入力
                 // 最初はString型で入力を促す
@@ -155,7 +157,7 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                 }
             }
             this.cnt = 0;           // カウントを初期化
-            this.dealer= 0;     // ディーラーの手札を初期化
+            this.dealer= 0;         // ディーラーの手札を初期化
             System.out.println("ディーラーがドローします");
             // ルールに従いディーラーの手札の合計が17以上になるまでループ
             while (this.dealer < 17){

@@ -1,3 +1,4 @@
+package GameCenter;
 import java.util.*;
 public class Numberhitgame implements IFGames{
     // スキャナークラスをインスタンス化
@@ -68,7 +69,7 @@ public class Numberhitgame implements IFGames{
                     // 最初はString型で入力を促す
                     this.strnum = stdIn.next();
                     // int型に変換
-                    this.num = Integer.valueOf(strnum);
+                    this.num = Integer.valueOf(this.strnum);
                     // 入力された数字が0以上100未満だった場合例外を送出する
                     if (this.num < 0 || this.num > 100){
                         throw new NumericLimit(this.num);
