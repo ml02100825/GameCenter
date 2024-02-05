@@ -225,7 +225,7 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                             // カウントを増やす
                             this.cnt += 1;         
                         }
-                    // もしプレイヤーとディーラーのスコアが同じだtt場合
+                    // もしプレイヤーとディーラーのスコアが同じだった場合
                         else if(this.playerscore == this.dealerscore){
                             // 引き分けリストにプレイヤーを追加
                             this.drawer.add(key);
