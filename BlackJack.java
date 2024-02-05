@@ -81,7 +81,7 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                     // ループを終了
                     break;
                 }
-                //  入力された値が1未満か10より大きかった場合
+                // 入力された値が1未満か10より大きかった場合
                 if (this.players < 1 || this.players > 10){
                     // 例外を送出する
                     throw new NumericLimit(this.players);
@@ -96,7 +96,7 @@ public class BlackJack extends Trunp implements IFGames ,Draw{
                 }
                 // 全プレイヤーの手札を表示
                 for (Integer key : this.hands.keySet()) {
-                    System.out.println(key + ":" + hands.get(key));
+                    System.out.println(key + ":" + this.hands.get(key));
                 }
                 // 無限ループ
                 while (true) {                    
