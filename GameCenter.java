@@ -3,7 +3,7 @@ public class GameCenter {
     public static void main(String[] args) {
     //入力されたコマンドによって、起動するアプリを選択する
     Scanner stdIn = new Scanner(System.in);
-    // アプリのインスタンスを管理する変数appを宣言する
+    // アプリのインスタンスを管理する変数gamesを宣言する
     IFGames games;
     // ループの継続を判断する変数roopを宣言する
     boolean roop = true;  
@@ -18,9 +18,9 @@ public class GameCenter {
       // 文字列を入力
       switch(stdIn.nextLine()){
         case "1":
-          //メモアプリのインスタンスを生成する
+          // 数あてゲームのインスタンスを生成する
           games = new Numberhitgame();
-          //メモアプリを起動する
+          // 数あてゲームを起動する
           games.startUp();
           break;
         case "2":
@@ -30,7 +30,7 @@ public class GameCenter {
           games.startUp();
           break;
         case "99":
-        // roopをfalseに変更
+          // roopをfalseに変更
           roop = false;
           break;
         default:
