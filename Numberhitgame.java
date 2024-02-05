@@ -1,4 +1,3 @@
-package GameCenter;
 import java.util.*;
 public class Numberhitgame implements IFGames{
     // スキャナークラスをインスタンス化

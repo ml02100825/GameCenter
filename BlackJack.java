@@ -1,4 +1,3 @@
-package GameCenter;
 import java.util.*;
 public class BlackJack extends Trunp implements IFGames ,Draw{
     // スキャナークラスをインスタンス化

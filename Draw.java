@@ -1,4 +1,3 @@
-package GameCenter;
 import java.util.*;
 /**
  * Draw
