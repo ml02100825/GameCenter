@@ -44,5 +44,6 @@ public class GameCenter {
         break;
       }
     }
+    stdIn.close();
       }
 }
